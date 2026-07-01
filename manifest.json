@@ -1,0 +1,22 @@
+{
+  "name": "IP Chat — by Sumit",
+  "short_name": "IP Chat",
+  "description": "Real-time messaging over a shared channel",
+  "start_url": "/",
+  "display": "standalone",
+<<<<<<< HEAD
+  "background_color": "#0B0D14",
+  "theme_color": "#0B0D14",
+=======
+  "background_color": "#0F1115",
+  "theme_color": "#0F1115",
+>>>>>>> b84223d379f54b7af70875bcbe33f3de89fa1ba9
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

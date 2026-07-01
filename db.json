@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"rooms":{"sss":{"password":null,"messages":[{"id":"84e61862-b30c-4a43-885a-31f1474f7ce6","username":"sumi","text":"hi","type":"text","time":1782936037746,"replyTo":null,"delivered":false,"ownerSocketId":"S2D0h1mS-NccZ1m3AAAB"}]}}}
+=======
+{"rooms":{"this":{"password":null,"messages":[{"id":"2da683a3-68f7-482d-93e6-1afae996d60d","username":"hloo","text":"hiii\\\\","type":"text","time":"2026-06-30T20:49:10.500Z","replyTo":null,"ownerSocketId":"sRo_h7urOmXONhG-AAAF"}]}}}
+>>>>>>> b84223d379f54b7af70875bcbe33f3de89fa1ba9

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0F1115"/>
+  <circle cx="256" cy="180" r="14" fill="#4ADE80"/>
+  <text x="256" y="320" font-family="'IBM Plex Mono', monospace" font-size="160" font-weight="700" fill="#FF6B4A" text-anchor="middle">IP</text>
+</svg>

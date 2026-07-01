@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<<<<<<< HEAD
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IP Chat — by Sumit</title>
+<meta name="theme-color" content="#0B0D14">
+=======
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Chat — by Sumit</title>
+<meta name="theme-color" content="#0F1115">
+>>>>>>> b84223d379f54b7af70875bcbe33f3de89fa1ba9
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<<<<<<< HEAD
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Toast notifications (connection status, errors) -->
+<div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+<!-- ============== LOADING SCREEN ============== -->
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-orb"></div>
+  <p class="loading-text">Connecting to IP Chat…</p>
+</div>
+
+<!-- ============== JOIN SCREEN ============== -->
+<div id="join-screen" class="screen hidden">
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <button id="theme-toggle-join" class="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+
+  <div class="join-card">
+    <div class="brand">
+      <span class="brand-orb"></span>
+      <span class="brand-name">IP Chat</span>
+    </div>
+    <p class="brand-tag">Real-time messaging, wherever you connect from</p>
+
+    <form id="join-form">
+      <label class="field-label" for="username">Your name</label>
+      <input type="text" id="username" placeholder="e.g. Kunal" maxlength="24" autocomplete="off" required>
+
+      <label class="field-label" for="roomcode">Channel code</label>
+      <div class="channel-input-wrap">
+        <span class="channel-prefix">#</span>
+        <input type="text" id="roomcode" placeholder="general" maxlength="20" autocomplete="off" required>
+      </div>
+      <p class="hint">Share the same channel code with others to chat together.</p>
+
+      <label class="field-label" for="password">Password <span class="optional-tag">optional</span></label>
+      <input type="password" id="password" placeholder="Leave empty for an open channel" maxlength="40" autocomplete="off">
+
+      <p id="join-error" class="join-error hidden"></p>
+
+      <button type="submit" class="btn-primary">
+        <span>Connect</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+
+    <div id="active-rooms-join" class="active-rooms-block hidden">
+      <span class="section-label">Active channels</span>
+      <ul id="active-rooms-list-join" class="active-rooms-list"></ul>
+    </div>
+
+    <p class="credit">Built by <strong>Sumit</strong></p>
+  </div>
+</div>
+
+<!-- ============== CHAT SCREEN ============== -->
+<div id="chat-screen" class="screen hidden">
+
+  <!-- Mobile drawer backdrop -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop hidden"></div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-top">
+      <span class="brand-orb small"></span>
+      <span class="brand-name">IP Chat</span>
+      <button id="theme-toggle" class="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button id="sidebar-close" class="sidebar-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Profile section -->
+    <div class="profile-card">
+      <span id="my-avatar" class="avatar avatar-lg"></span>
+      <div class="profile-meta">
+        <span id="header-user" class="profile-name"></span>
+        <span class="profile-status"><span class="status-dot online"></span>Online</span>
+      </div>
+    </div>
+
+    <div class="channel-info">
+      <span class="section-label">Channel</span>
+      <span id="current-room" class="channel-value">#general</span>
+    </div>
+
+    <div class="users-block">
+      <span class="section-label">Online — <span id="user-count">0</span></span>
+      <ul id="user-list" class="user-list"></ul>
+    </div>
+
+    <div class="active-rooms-block">
+      <span class="section-label">Other channels</span>
+      <ul id="active-rooms-list" class="active-rooms-list"></ul>
+    </div>
+
+    <button id="leave-btn" class="btn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Disconnect
+    </button>
+    <p class="credit sidebar-credit">Built by <strong>Sumit</strong></p>
+  </aside>
+
+  <main class="chat-main">
+    <!-- Live connection pulse — breathes when synced, turns amber + speeds up on reconnect -->
+    <div id="connection-pulse" class="connection-pulse"></div>
+
+    <header class="chat-header">
+      <button id="sidebar-open" class="sidebar-open" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="header-room-info">
+        <span id="header-room" class="header-room">#general</span>
+        <span id="header-status" class="header-status">Connected</span>
+      </div>
+      <button id="search-toggle-btn" class="icon-btn" title="Search messages" aria-label="Search messages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+    </header>
+
+    <div id="search-bar" class="search-bar hidden">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Search messages in this channel…">
+      <span id="search-count" class="search-count"></span>
+      <button id="search-close" class="search-close" aria-label="Close search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="messages" class="messages"></div>
+
+    <div id="typing-indicator" class="typing-indicator"></div>
+
+    <div class="composer">
+      <div id="reply-preview" class="reply-preview hidden">
+        <div class="reply-preview-bar"></div>
+=======
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- JOIN SCREEN -->
+  <div id="join-screen" class="screen">
+    <button id="theme-toggle-join" class="theme-toggle" title="Toggle theme">🌙</button>
+    <div class="join-card">
+      <div class="brand">
+        <span class="brand-mark">●</span>
+        <span class="brand-name">IP CHAT</span>
+      </div>
+      <p class="brand-tag">Real-time messaging over a shared channel</p>
+
+      <form id="join-form">
+        <label class="field-label" for="username">Your name</label>
+        <input type="text" id="username" placeholder="e.g. Kunal" maxlength="24" autocomplete="off" required>
+
+        <label class="field-label" for="roomcode">Channel code</label>
+        <div class="channel-input-wrap">
+          <span class="channel-prefix">#</span>
+          <input type="text" id="roomcode" placeholder="general" maxlength="20" autocomplete="off" required>
+        </div>
+        <p class="hint">Share the same channel code with others to chat together. Leave default for a public room.</p>
+
+        <label class="field-label" for="password">Password (optional)</label>
+        <input type="password" id="password" placeholder="Leave empty for an open channel" maxlength="40" autocomplete="off">
+        <p class="hint">First person to join with a password locks the channel — others must enter the same password.</p>
+
+        <p id="join-error" class="join-error hidden"></p>
+
+        <button type="submit" class="btn-primary">Connect</button>
+      </form>
+
+      <div id="active-rooms-join" class="active-rooms-block hidden">
+        <span class="channel-label">ACTIVE CHANNELS</span>
+        <ul id="active-rooms-list-join" class="active-rooms-list"></ul>
+      </div>
+
+      <p class="credit">Built by <strong>Sumit</strong></p>
+    </div>
+  </div>
+
+  <!-- CHAT SCREEN -->
+  <div id="chat-screen" class="screen hidden">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <span class="brand-mark">●</span>
+        <span class="brand-name">IP CHAT</span>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle theme">🌙</button>
+      </div>
+      <div class="channel-info">
+        <span class="channel-label">CHANNEL</span>
+        <span id="current-room" class="channel-value">#general</span>
+      </div>
+      <div class="users-block">
+        <span class="channel-label">ONLINE — <span id="user-count">0</span></span>
+        <ul id="user-list"></ul>
+      </div>
+      <div class="active-rooms-block">
+        <span class="channel-label">OTHER CHANNELS</span>
+        <ul id="active-rooms-list" class="active-rooms-list"></ul>
+      </div>
+      <button id="leave-btn" class="btn-ghost">Disconnect</button>
+      <p class="credit sidebar-credit">Built by <strong>Sumit</strong></p>
+    </aside>
+
+    <main class="chat-main">
+      <header class="chat-header">
+        <div class="status-dot"></div>
+        <span id="header-room">#general</span>
+        <span class="header-sub">connected as <strong id="header-user"></strong></span>
+        <button id="search-toggle-btn" class="search-toggle-btn" title="Search messages">🔍</button>
+      </header>
+
+      <div id="search-bar" class="search-bar hidden">
+        <input type="text" id="search-input" placeholder="Search messages in this channel...">
+        <span id="search-count" class="search-count"></span>
+        <button id="search-close" class="search-close">✕</button>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <div id="reply-preview" class="reply-preview hidden">
+>>>>>>> b84223d379f54b7af70875bcbe33f3de89fa1ba9
+        <div class="reply-preview-content">
+          <span class="reply-preview-label">Replying to <strong id="reply-preview-user"></strong></span>
+          <span id="reply-preview-text" class="reply-preview-text"></span>
+        </div>
+<<<<<<< HEAD
+        <button id="reply-cancel" class="reply-cancel" aria-label="Cancel reply">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="message-form" class="message-form">
+        <button type="button" id="emoji-btn" class="composer-icon-btn" aria-label="Emoji">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+        </button>
+        <div id="emoji-panel" class="emoji-panel hidden"></div>
+
+        <button type="button" id="image-btn" class="composer-icon-btn" title="Send image" aria-label="Send image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </button>
+        <input type="file" id="image-input" accept="image/*" class="hidden">
+
+        <input type="text" id="message-input" placeholder="Type a message…" autocomplete="off" maxlength="1000">
+
+        <button type="submit" class="btn-send" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </form>
+    </div>
+  </main>
+</div>
+=======
+        <button id="reply-cancel" class="reply-cancel">✕</button>
+      </div>
+
+      <div id="typing-indicator" class="typing-indicator"></div>
+
+      <form id="message-form" class="message-form">
+        <button type="button" id="emoji-btn" class="btn-emoji">😊</button>
+        <div id="emoji-panel" class="emoji-panel hidden"></div>
+        <button type="button" id="image-btn" class="btn-emoji" title="Send image">📎</button>
+        <input type="file" id="image-input" accept="image/*" class="hidden">
+        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" maxlength="1000">
+        <button type="submit" class="btn-send">Send</button>
+      </form>
+    </main>
+  </div>
+>>>>>>> b84223d379f54b7af70875bcbe33f3de89fa1ba9
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>
